@@ -17,8 +17,6 @@ let radio;
 
 function setup() {
   createCanvas(700, 700);
-  // var canvas = document.getElementbyId("canvas");
-  // canvas.parent('canvascontainer');
   capture = createCapture(VIDEO);
   capture.hide();
 
@@ -26,9 +24,7 @@ function setup() {
 
   poseNet = ml5.poseNet(capture, modelLoaded);
   poseNet.on('pose', gotPoses);
-  // background(255)
 
-  //create radio buttons
   radio = createRadio();
   radio.option('Right Hand');
   radio.option('Left Hand');
@@ -37,7 +33,7 @@ function setup() {
   radio.position(50, 70);
   textAlign(CENTER);
   fill(255, 0, 0);
-  
+
 }
 
 function gotPoses(poses) {
@@ -112,66 +108,34 @@ function drawLeftHand() {
   }
 }
 
-// //get html elements
+
   var submitBtn = document.getElementById("submit");
-  var name = document.getElementById("name");
   var canvas = document.getElementsByTagName("canvas");
 
-//   //create reference for firebase
-//   var db = firebase.firestore();
-//   var storageRef = firebase.storage().ref();
 
-//   //add event listener for button
   submitBtn.addEventListener("click", e => {
-    // var user = name.value;
-    // db.collection("users")
-    //   .add({
-    //     name: user,
-    //   })
-    //   .then(function(docRef) {
-    //     console.log("Document written with ID: ", docRef.id);
-    //   })
-    //   .catch(function(error) {
-    //     console.error("Error adding document: ", error);
-    //   });
-    // var full = user;
-    saveImage(Shayan);
+
+
+    var image = new Image()
+    image.id= 'pic'
+    image.src= canvas.toDataURL('image/png')
+
+    console.log(image.src)
+
+
+    var button = document.createElement('button')
+    button.textContent='Upload Image'
+    document.getElementById("submitForm").appendChild(button)
+    var name = document.getElementById("name");
+    console.log(name.value)
+    button.onclick = function(){
+      const ref = firebase.storage().ref()
+      ref.child(name.value +'-' + new Date()).putString(image.src,'data_url')
+      .then(function(snapshot){
+        button.remove();
+        alert("Image Uploaded")
+
+      })
+    }
+
   });
-
-  function saveImage(name) {
-    canvas.toBlob(function(blob) {
-      var image = new Image();
-      image.src = blob;
-      console.log('image', image)
-      var metadata = {
-        contentType: "image/png"
-      };
-
-//       storageRef
-//         .child("images/" + name)
-//         .put(blob, metadata)
-//         .then(function(snapshot) {
-//           console.log("Uploaded", snapshot.totalBytes, "bytes.");
-//           window.location.href = "gallery.html";
-//         })
-//         .catch(function(error) {
-//           // [START onfailure]
-//           console.error("Upload failed:", error);
-//         });
-//     });
-//   }
-// ();
-
-
-//   var submitBtn = document.getElementById("submit");
-//   var name = document.getElementById("name");
-//   var canvas = document.getElementsByTagName("canvas");
-
-
-//   submitBtn.addEventListener("click", e => {
-    
-//     console.log("canvas",canvas.toDataURL("image/png"));
-//     var image = canvas.toDataURL("image/png");
-//     document.write('<img src="'+image+'"/>');
-
-//   });

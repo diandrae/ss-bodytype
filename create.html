@@ -5,11 +5,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
   <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js" type="text/javascript"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
-  <script defer src="database-init.js"></script>
 
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta charset="utf-8" />
@@ -18,21 +13,42 @@
 
 <body>
   <div id="canvasContainer"><canvas id="canvas"></div>
+      <a href="gallery.html">Go to Gallery</a>
 
-  <div id="submitForm"> 
+  <div id="submitForm">
     "Name:"
     <br>
     <input type="text" id="name">
     <br>
     <br>
-    <button id="submit">Submit</button>
+     <button id="submit">Capture Image</button>
     <div>
       <script defer src="create.js"></script>
     </div>
     </div>
-
-
-
 </body>
-</html>
+</body>
 
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyBUeT_Efhx8S-l-wvKulUxi1IGOg8z2mC8",
+    authDomain: "circlesgame-b7700.firebaseapp.com",
+    projectId: "circlesgame-b7700",
+    storageBucket: "circlesgame-b7700.appspot.com",
+    messagingSenderId: "867629146073",
+    appId: "1:867629146073:web:ff0ad984773b75d48743c8",
+    measurementId: "G-9T55KHBHBK"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+  <script src='test.js'></script>
+  <script src="create.js"></script>
+</html>
+</html>

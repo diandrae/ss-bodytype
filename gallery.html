@@ -1,34 +1,70 @@
-<head>
-   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-</head>
-<body>
-  <h1 class="gallerytitle">Gallery</h1>
-  <ul class="alphabet">
-                        <li>A</li>
-                        <li>B</li>
-                        <li>C</li>
-                        <li>D</li>
-                        <li>E</li>
-                        <li>F</li>
-                        <li>G</li>
-                        <li>H</li>
-                        <li>I</li>
-                        <li>J</li>
-                        <li>K</li>
-                        <li>L</li>
-                        <li>M</li>
-                        <li>N</li>
-                        <li>O</li>
-                        <li>P</li>
-                        <li>Q</li>
-                        <li>R</li>
-                        <li>S</li>
-                        <li>T</li>
-                        <li>U</li>
-                        <li>V</li>
-                        <li>W</li>
-                        <li>X</li>
-                        <li>Y</li>
-                        <li>Z</li>
-                    </ul>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+    div.gallery {
+      margin: 5px;
+      border: 1px solid #ccc;
+      float: left;
+      width: 180px;
+    }
+
+
+      h2 {
+        font-size: 50px;
+        color: white;
+        background-color: "blue" color:"white";
+        background-color: lightblue;
+        padding: 20px;
+    }
+
+    div.gallery:hover {
+      border: 1px solid #777;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: 20%
+    }
+
+    div.desc {
+      padding: 5;
+      text-align: center;
+    }
+    </style>
+  </head>
+  <body onload="getImages()">
+
+    <h2>Gallery</h2>
+    <h5>
+        <a href="create.html">Go to Create Page</a>
+    </h5>
+
+
+  </body>
+    <script src="gallery.js" ></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyBUeT_Efhx8S-l-wvKulUxi1IGOg8z2mC8",
+        authDomain: "circlesgame-b7700.firebaseapp.com",
+        projectId: "circlesgame-b7700",
+        storageBucket: "circlesgame-b7700.appspot.com",
+        messagingSenderId: "867629146073",
+        appId: "1:867629146073:web:ff0ad984773b75d48743c8",
+        measurementId: "G-9T55KHBHBK"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+</html>
