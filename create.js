@@ -14,6 +14,12 @@ let pLeftWristY;
 
 let radio;
 
+var canvas;
+
+let cameraImage;
+
+let timer = 5
+
 
 function setup() {
   createCanvas(700, 700);
@@ -33,6 +39,7 @@ function setup() {
   radio.position(50, 70);
   textAlign(CENTER);
   fill(255, 0, 0);
+  background(255);
 
 }
 
@@ -49,22 +56,35 @@ function modelLoaded() {
 }
 
 function draw() {
+  //create timer
+  pg.textAlign(CENTER, CENTER);
+  pg.textSize(100);
+  pg.text(timer, 600,600);
+
   translate(width, 0); // move to far corner
   scale(-1.0, 1.0); // flip x-axis backwards
-  image(capture, 0, 0, width, width * capture.height / capture.width);
+  cameraImage = image(capture, 0, 0, width, width * capture.height / capture.width);
   image(pg, 0, 0, width, height);
   filter(GRAY);
+
+  if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+    timer --;
+  }
+  if (timer == 0) {
+   stopDrawing();
+  }
+
 
   let val = radio.value();
 
   if (val == "Nose") {
-    drawNose();
+  setTimeout(drawNose,4000);
     // console.log('Nose selected');
   } else if (val == "Right Hand") {
-    drawRightHand();
+    setTimeout(drawRightHand,4000);
     // console.log('Right hand selected');
   } else if (val == "Left Hand") {
-    drawLeftHand();
+  setTimeout(drawLeftHand,4000);
     // console.log('Left hand selected');
   }
 }
