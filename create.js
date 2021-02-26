@@ -20,13 +20,15 @@ let cameraImage;
 
 let timer = 5
 
+ar alphabetLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
 
 function setup() {
-  createCanvas(700, 700);
+  createCanvas(1500, 700);
   capture = createCapture(VIDEO);
   capture.hide();
 
-  pg = createGraphics(width, height);
+  pg = createGraphics(600,500);
 
   poseNet = ml5.poseNet(capture, modelLoaded);
   poseNet.on('pose', gotPoses);
@@ -35,9 +37,9 @@ function setup() {
   radio.option('Right Hand');
   radio.option('Left Hand');
   radio.option('Nose');
-  radio.style('width', '100px');
+  radio.style('width', '300px');
   radio.position(50, 70);
-  textAlign(CENTER);
+  textAlign(LEFT);
   fill(255, 0, 0);
   background(255);
 
@@ -159,3 +161,13 @@ function drawLeftHand() {
     }
 
   });
+
+  function madlibs(alphabetLetters) {
+    var alphabetLetter = alphabetLetters[Math.floor(Math.random() * alphabetLetters.length)];
+    return "Move to create your own version of the letter" + " " + alphabetLetter ;
+  }
+
+  function generator(){
+    var heading = document.getElementById('alphabetHeading');
+    heading.innerHTML = madlibs(alphabetLetters)
+  }
