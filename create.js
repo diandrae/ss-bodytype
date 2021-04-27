@@ -20,11 +20,12 @@ let cameraImage;
 
 let timer = 5
 
-ar alphabetLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+var alphabetLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
+var isDrawing = true;
 
 function setup() {
-  createCanvas(1500, 700);
+  createCanvas(700,700);
   capture = createCapture(VIDEO);
   capture.hide();
 
@@ -89,6 +90,11 @@ function draw() {
   setTimeout(drawLeftHand,4000);
     // console.log('Left hand selected');
   }
+}
+
+function stopDrawing(){
+  capture.stop();
+isDrawing = false;
 }
 
 function drawNose() {
