@@ -18,6 +18,8 @@ var canvas;
 
 let cameraImage;
 
+var letterTrail;
+
 let timer = 5
 
 var alphabetLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -25,6 +27,8 @@ var alphabetLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L
 var isDrawing = true;
 
 function setup() {
+    radioFlag = false;
+
   createCanvas(700,700);
   capture = createCapture(VIDEO);
   capture.hide();
@@ -44,6 +48,13 @@ function setup() {
   fill(255, 0, 0);
   background(255);
 
+  rightHandBotton.onchange  =() => { radioFlag = true;};
+ leftHandButton.onchange  =() => { radioFlag = true;};
+ noseButton.onchange=() => { radioFlag = true;};
+
+}
+
+
 }
 
 function gotPoses(poses) {
@@ -59,24 +70,27 @@ function modelLoaded() {
 }
 
 function draw() {
-  //create timer
-  pg.textAlign(CENTER, CENTER);
-  pg.textSize(100);
-  pg.text(timer, 600,600);
+  textSize(100);
+   text(timer,350,600);
 
   translate(width, 0); // move to far corner
   scale(-1.0, 1.0); // flip x-axis backwards
-  cameraImage = image(capture, 0, 0, width, width * capture.height / capture.width);
-  image(pg, 0, 0, width, height);
+  if(isDrawing) {
+    image(capture, 0, 0, width, width * capture.height / capture.width);
+  } else {
+    background(255);
+  }
+
+  // cameraImage = image(capture, 300,0,900,900);
+  letterTrail = image(pg, 0, 0, width, height);
   filter(GRAY);
 
-  if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+  if (frameCount % 60 == 0 && timer > 0 && radioFlag) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
     timer --;
   }
   if (timer == 0) {
    stopDrawing();
   }
-
 
   let val = radio.value();
 
