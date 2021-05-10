@@ -2,7 +2,7 @@
   font-family: 'Raleway', sans-serif;
 }
 
-body {background-color: #EBEBEB;}
+body {background-color: #FFFFF;}
 
 /* mouse over link */
 
@@ -12,13 +12,13 @@ a{
 }
 
 a:hover {
-  color: #FF00FF;
+   color: #cfff22;
   text-decoration: none;
 }
 
 /* selected link */
 a:active {
-  color: #FF00FF;
+   color: #cfff22;
   text-decoration: none;
 }
 
@@ -40,6 +40,120 @@ line-height: 200px;
 
 color: #FF00FF;
 }
+
+* CREATE PAGE */
+h2.goToGallery {
+position: absolute;
+width: 326.02px;
+height: 59.01px;
+right: 50px;
+top: 370px;
+
+font-family: Helvetica;
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+line-height: 90px;
+/* or 300% */
+
+color: #413F3F;
+}
+
+p.arrowBack {
+position: absolute;
+/* width: 326.02px;
+height: 20.01px; */
+left: 50px;
+top: 0px;
+
+font-family: Helvetica;
+font-style: normal;
+font-size: 20px;
+/* or 300% */
+
+color: #413F3F;
+}
+
+
+.label {
+
+font-family: Helvetica;
+font-style: normal;
+font-weight: bold;
+font-size: 10px; !important
+line-height: 90px;
+}
+
+button#submit {
+  position: absolute;
+right: 50px;
+bottom: 50px;
+  background-color: black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+   border:black; !important
+  border:1px solid; !important
+    text-size: 30px; !important
+}
+
+button:hover#submit{
+  background-color: white; /* Green */
+  color: black;
+  border:1px solid black; !important
+  padding: 15px 32px;
+  text-align: center;
+  text-size: 30px; !important
+}
+
+
+
+div#canvas {
+position: fixed
+margin-left: 200px; !important
+margin-right: 200px; !important
+canvas#defaultCanvas0[style]{
+/* position: fixed */
+margin-left: 400px !important;
+margin-bottom: 200px !important;
+}
+
+
+element.style {
+    width: 100%;
+    height: 100%;
+
+}
+
+#submitName {
+ position: absolute;
+left: 50px;
+bottom: 50px;
+
+}
+
+input[type=text] {
+  border: none;
+  border-bottom: 2px solid black;
+  padding: 12px 20px;
+    background-color: #EBEBEB;
+/*     background-color: #EBEBEB; */
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+        outline: none;
+    }
+
+p.exploreGallery {
+position: absolute;
+right: 40px;
+top: 0px;
+text-size: 10px;
+
+}
+
 
 h3.viewgallery{
 position: absolute;

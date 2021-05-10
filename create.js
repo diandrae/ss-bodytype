@@ -29,7 +29,7 @@ var isDrawing = true;
 function setup() {
     radioFlag = false;
 
-  createCanvas(700,700);
+  createCanvas(700,650);
   capture = createCapture(VIDEO);
   capture.hide();
 
@@ -169,18 +169,29 @@ function drawLeftHand() {
     button.textContent='Upload Image'
     document.getElementById("submitForm").appendChild(button)
     var name = document.getElementById("name");
+    var letter = document.getElementById("letter");
     console.log(name.value)
     button.onclick = function(){
       const ref = firebase.storage().ref()
-      ref.child(name.value +'-' + new Date()).putString(image.src,'data_url')
+      .child(letter.value + name.value + "-" + new Date())
       .then(function(snapshot){
         button.remove();
         alert("Image Uploaded")
 
-      })
-    }
+        snapshot.ref.getDownloadURL().then(function(downloadURL) {
 
-  });
+          var record = {
+            downloadUrl,
+            letter
+          };
+          firestore.collection('images').add(record);
+          // console.log('File available at', downloadURL);
+          // create a record in firestore
+        });
+
+      });
+  };
+});
 
   function madlibs(alphabetLetters) {
     var alphabetLetter = alphabetLetters[Math.floor(Math.random() * alphabetLetters.length)];
