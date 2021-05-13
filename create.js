@@ -1,155 +1,160 @@
 let capture;
 let poseNet;
-let pose;
+let newPose = {};
+
 let pg;
 
 let pNoseX;
 let pNoseY;
 
-let pRightWristX;
-let pRightWristY;
-
-let pLeftWristX;
-let pLeftWristY;
+let partSelected;
 
 let radio;
 
-var canvas;
+let timer = 10
 
-let cameraImage;
+let video;
 
-var letterTrail;
-
-let timer = 5
+radioFlag = false;
 
 var alphabetLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 var isDrawing = true;
 
+//following Lisa Jamhoury's Keypoint Smoothing https://javascript.plainenglish.io/simple-smoothing-for-posenet-keypoints-cd1bc57f5872
+// this sketch uses es6 modules, so window.setup is needed
+// see https://bl.ocks.org/GoSubRoutine/da4939559d8b786df13f5694ea2edd30
 function setup() {
-    radioFlag = false;
-
-  createCanvas(700,650);
-  capture = createCapture(VIDEO);
-  capture.hide();
-
-  pg = createGraphics(600,500);
-
-  poseNet = ml5.poseNet(capture, modelLoaded);
-  poseNet.on('pose', gotPoses);
+  createCanvas(640,480);
+  pg = createGraphics(width,height);
 
   radio = createRadio();
   radio.option('Right Hand');
   radio.option('Left Hand');
   radio.option('Nose');
-  radio.style('width', '300px');
-  radio.position(50, 70);
-  textAlign(LEFT);
-  fill(255, 0, 0);
+
+  video = createCapture(VIDEO);
+ video.size(width, height);
+ video.hide();
+
+ player1 = new Player();
+
+ // flip posenet data to mirror user
+ const options = {
+   flipHorizontal: true,
+ };
+ poseNet = ml5.poseNet(video, options, modelReady);
+  poseNet.on('pose', (results) => getPose(results));
+};
+
+
+    poseNet = ml5.poseNet(capture, modelLoaded);
+    poseNet.on('pose', gotPoses);
+};
+
+window.draw = function () {
   background(255);
 
-  rightHandBotton.onchange  =() => { radioFlag = true;};
- leftHandButton.onchange  =() => { radioFlag = true;};
- noseButton.onchange=() => { radioFlag = true;};
-
-}
-
-
-}
-
-function gotPoses(poses) {
-
-  //console.log(poses);
-  if (poses.length > 0) {
-    pose = poses[0].pose;
+  if (updatePose === true) {
+    player1.update(newPose);
+    updatePose = false;
   }
-}
 
-function modelLoaded() {
-  console.log('poseNet.ready');
-}
+  // wait for pose data to draw
+  if (typeof player1.pose === 'undefined') {
+    console.log('waiting for player1 pose!');
+    return;
+  }
 
-function draw() {
-  textSize(100);
-   text(timer,350,600);
-
+   if(isDrawing) {
+  push();
   translate(width, 0); // move to far corner
   scale(-1.0, 1.0); // flip x-axis backwards
-  if(isDrawing) {
-    image(capture, 0, 0, width, width * capture.height / capture.width);
-  } else {
+  image(video, 0, 0, width, height-30);
+    pop();
+   } else {
     background(255);
   }
+  push();
+   image(pg, 0, 0, width, height);
+    pop();
 
-  // cameraImage = image(capture, 300,0,900,900);
-  letterTrail = image(pg, 0, 0, width, height);
-  filter(GRAY);
 
   if (frameCount % 60 == 0 && timer > 0 && radioFlag) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
     timer --;
   }
-  if (timer == 0) {
+  if (timer == 9) {
+     textSize(40);
+    text('GET READY IN 3', width/4, height/2);
+  }
+  if (timer == 8) {
+     textSize(40);
+    text('GET READY IN 2', width/4, height/2);
+  }
+  if (timer == 7) {
+     textSize(40);
+    text('GET READY IN 1', width/4, height/2);
+  }
+   if (timer == 6) {
+      textSize(30);
+    text('YOU HAVE 5 SECONDS TO DRAW', width/6, height/2);
+  }
+  if (timer <= 6 ) {
+ textSize(30);
+  text(timer,width/2,height);
+  }
+if (timer == 0 ) {
    stopDrawing();
+    loop();
+
   }
 
-  let val = radio.value();
+let val = radio.value();
 
-  if (val == "Nose") {
-  setTimeout(drawNose,4000);
-    // console.log('Nose selected');
-  } else if (val == "Right Hand") {
-    setTimeout(drawRightHand,4000);
-    // console.log('Right hand selected');
-  } else if (val == "Left Hand") {
-  setTimeout(drawLeftHand,4000);
-    // console.log('Left hand selected');
-  }
-}
+ if (val == "Nose") {
+   radioFlag=true;
+   setTimeout(drawNose,7000);
+ } else if (val == "Right Hand") {
+   radioFlag=true;
+    setTimeout(drawRightHand,7000);
+ } else if (val == "Left Hand") {
+   radioFlag=true;
+    setTimeout(drawLeftHand,7000);
+ }
 
-function stopDrawing(){
-  capture.stop();
-isDrawing = false;
-}
+  if( frameCount >= timeLimit ){
+   noLoop();
+   push();
+   strokeWeight(0);
+   pop();
+ }
+
+};
 
 function drawNose() {
-  if (pose) {
-
-    pg.stroke(255, 255, 255);
-    pg.strokeWeight(40);
-    pg.line(pose.nose.x, pose.nose.y, pNoseX, pNoseY);
-
-    pNoseX = pose.nose.x;
-    pNoseY = pose.nose.y;
-
-  }
+  player1.draw(0);
 }
 
 function drawRightHand() {
-  if (pose) {
-
-    pg.stroke(255, 255, 255);
-    pg.strokeWeight(20);
-    pg.line(pose.rightWrist.x, pose.rightWrist.y, pRightWristX, pRightWristY);
-
-    pRightWristX = pose.rightWrist.x;
-    pRightWristY = pose.rightWrist.y;
-
-  }
+  player1.draw(10);
 }
 
 function drawLeftHand() {
-  if (pose) {
-
-    pg.stroke(255, 255, 255);
-    pg.strokeWeight(20);
-    pg.line(pose.leftWrist.x, pose.leftWrist.y, pLeftWristX, pLeftWristY);
-
-    pLeftWristX = pose.leftWrist.x;
-    pLeftWristY = pose.leftWrist.y;
-
-  }
+  player1.draw(9);
 }
 
+// When posenet model is ready, let us know!
+function modelReady() {
+  console.log('Model Loaded');
+}
+
+// Get pose from posenet
+function getPose(poses) {
+  if (typeof poses[0] !== 'undefined') {
+    newPose = poses[0];
+    updatePose = true;
+  }
+}
 
   var submitBtn = document.getElementById("submit");
   var canvas = document.getElementsByTagName("canvas");
