@@ -1,1 +1,1 @@
-# ss-bodytype
+# BodyType
