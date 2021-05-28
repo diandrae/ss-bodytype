@@ -15,6 +15,7 @@ class Keypoint {
     this.smoothAmt = SMOOTHAMT;
     this.pastX = [];
     this.pastY = [];
+    this.path = new Path();
   }
 
   setPosition(position) {
@@ -35,12 +36,8 @@ class Keypoint {
 
 
   drawline() {        //this is the function that draws the line
-    let r = map( frameCount, 0, timeLimit, 1, 20);
-  pg.strokeWeight(r * 5);
-  pg.stroke(0);
-  pg.line((this.position.x), (this.position.y), px,py);
-    px = this.position.x;
-    py = this.position.y;
+    this.path.addPoint(this.position.x, this.position.y);
+     this.path.display();
   }
 
   getSmoothPosition(position) {

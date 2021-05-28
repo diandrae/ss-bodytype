@@ -31,10 +31,84 @@
       <div class="what">
         <p>
           <a href="#about">
-            <i class="far fa-question-circle"></i> What is this?</a
-          >
+            <i class="far fa-question-circle"></i> What is this?</a>
         </p>
       </div>
+      <script>
+let cam;
+let step = 13;
+let size;
+
+let maxB = 0;
+let canvas;
+
+function setup() {
+canvas = createCanvas(windowWidth, windowHeight);
+// canvas.style('z-index','1')
+canvas.position(0,0)
+
+cam = createCapture(VIDEO);
+// cam.translate(width,0); // move to far corner
+// cam.scale(-1.0,1.0);
+cam.hide();
+
+pixelDensity(2);
+noStroke();
+
+size = int(width / (cam.width / step)) / 2;
+
+
+
+
+}
+
+function draw() {
+background(226,226,226);
+
+cam.loadPixels();
+
+maxB = 0;
+
+if (cam.pixels.length > 0) {
+for (let y = 0; y < cam.height; y += step) {
+for (let x = 0; x < cam.width; x += step) {
+  let i = (y * cam.width + x) * 4;
+
+  let r = cam.pixels[i];
+  let g = cam.pixels[i + 1];
+  let b = cam.pixels[i + 2];
+
+  let pColor = color(r, g, b);
+  let pBright = brightness(pColor);
+
+  if (pBright > maxB) {
+    maxB = pBright;
+  }
+
+  let bright = int(map(pBright, 0, maxB, 0, 3));
+
+  let txt = "";
+  textStyle(NORMAL);
+  switch (bright) {
+    case 0:
+      txt = "BodyType";
+      // textStyle(ITALIC);
+
+
+  }
+
+  let xpos = map(x, 0, cam.width, 0, width);
+  let ypos = map(y, 0, cam.height, 0, height);
+
+  fill(214,255,44, (pBright - (maxB / 9) * bright) * 20);
+  textSize(size);
+  text(txt, xpos, ypos + size);
+}
+}
+}
+}
+</script>
+</section>
     </section>
     <section class="about" id="about">
       <h1>About <span>Body type</span></h1>
